@@ -19,6 +19,7 @@ function App() {
   // Initialize "color", "paintings", and "formView" states
   const [color, colorSetter] = useState("red");
   const [paintings, paintingsSetter] = useState(paintingsData);
+  const [sorted, sortedSetter] = useState(false);
   const [formView, formViewSetter] = useState(false);
 
   // Create callback function to change Parent's "color" state (changeColor)
@@ -46,12 +47,24 @@ function App() {
       let votesNextPainting = nextPainting.votes;
 
       // Compare the two vote amounts
-      if (votesCurrentPainting < votesNextPainting) return -1;
-      if (votesCurrentPainting > votesNextPainting) return 1;
+      if (votesCurrentPainting < votesNextPainting) return 1;
+      if (votesCurrentPainting > votesNextPainting) return -1;
       return 0;
     });
-
     paintingsSetter(sortedList);
+  }
+
+  function removeSort() {
+    paintingsSetter(paintingsData)
+  }
+
+  function toggleSort() {
+    if (sorted) {
+      removeSort();
+    } else {
+      sortPaintings();
+    }
+    sortedSetter(!sorted);
   }
 
   return (
@@ -67,14 +80,14 @@ function App() {
       />
 
       {/* Add toggleForm click behavior */}
-      <button onClick={toggleForm}>Show/Hide New Painting Form</button>
-      <button onClick={sortPaintings}>Sort Paintings</button>
+      <button onClick={toggleForm}>{formView ? 'Hide' : 'Show'} New Painting Form</button>
+      <button onClick={toggleSort}>{sorted ? 'Unsort Paintings' : 'Sort Paintings'}</button>
       <hr />
 
       {/* Breakout Activity #1: Render PaintingForm or PaintingsList Components based upon the new formView state value */}
       
       {/* Pass sortPaintings to PaintingsList whenever it's rendered */}
-      { formView ? <PaintingForm /> : <PaintingsList paintingsData={paintingsData} paintings={paintings} /> }
+      { formView ? <PaintingForm /> : <PaintingsList paintingsData={paintings} paintings={paintings} /> }
     </div>
   );
 }
