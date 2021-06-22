@@ -35,7 +35,7 @@ function PaintingsList(props) {
         <hr />
         <TextField 
           id="filled-basic" 
-          label="Filled" 
+          label="Search" 
           variant="filled" 
           onChange={handleSearch}
         />

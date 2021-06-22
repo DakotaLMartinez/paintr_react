@@ -1,31 +1,37 @@
+import { MenuItem } from '@material-ui/core';
+import { withStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import { NavLink } from 'react-router-dom'
+
+const WhiteTextTypography = withStyles({
+  root: {
+    color: "#FFFFFF"
+  }
+})(Typography);
+
 function NavBar(props) {
   return (
-    <div className={`ui inverted ${props.color} menu`}>
-      <a className="item">
+    <div className={`ui inverted red menu`}>
+      <div className="item">
         <h2 className="ui header">
           <i className={`${props.icon} icon`} />
           <div className="content">{props.title}</div>
           <div className="sub header">{props.description}</div>
         </h2>
-      </a>
+      </div>
 
-      {/* Call changeColor() via onClick using props */}
-
-      {/* WRONG WAY - Passing in RETURN of a function */}
-      {/* <button onClick={props.changeColor("purple")}>Change Color</button> */}
-      
-      {/* RIGHT WAY - Passing in an ENTIRE function (callback) */}
-      {/* <button onClick={() => props.changeColor("purple")}>
-        Change Color
-      </button> */}
+      <MenuItem>
+        <NavLink to="/">
+          <WhiteTextTypography>Paintings</WhiteTextTypography>
+        </NavLink>
+      </MenuItem>
+      <MenuItem>
+        <NavLink to="/paintings/new">
+          <WhiteTextTypography>New Painting</WhiteTextTypography>
+        </NavLink>
+      </MenuItem>
     </div>
   );
 };
 
 export default NavBar;
-
-// () => props.changeColor("purple")
-
-// function() {
-//    props.changeColor("purple") 
-// }
