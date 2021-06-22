@@ -1,57 +1,111 @@
 // import useState hook to initialize our states and make them re-settable
-import { useState } from 'react';  
+import { useState } from 'react';
+import { TextField, Container, Box, Button } from '@material-ui/core';
 
 function PaintingForm() {
     // create a state to keep track of ImgURL
     // const [stateName, setterMethod] = useState(initialStateValue);
     
-    const [imgUrl, imgUrlSetter] = useState("");
+  const [imgUrl, imgUrlSetter] = useState("");
+  const [title, titleSetter] = useState("");
+  const [artistName, artistNameSetter] = useState("");
+  const [date, dateSetter] = useState("");
+  const [width, widthSetter] = useState("");
+  const [height, heightSetter] = useState("");
 
-    // console.log(`My current imgUrl state is ${imgUrl}`);
-
-    // create a callback function that will trigger updates
-    // to our imgUrl state as we make changes to our "ImgURL"
-    // input
-    function handleImgUrl(event) {
-        // event => onChange, keystroke change
-        // target => where the event takes place, <input>
-        // value => what exists inside of our <input> at the
-        //          time of the onChange event
+  return(
+    <Container>
+      <Box
+        mx="auto"
+        // width={1 / 2}
+        align="center"
+      >
+        <h1> Add a new Painting</h1>
         
-        // passing in the input value at the time of the onChange
-        // event to be our new "imgUrl" state
-        imgUrlSetter(event.target.value);
+        <form>
+          {/* Controlled Input */}
+            <TextField 
+              type="text"
+              placeholder="ImgURL"
+              variant="filled"
+              onChange={(e) => imgUrlSetter(e.target.value)}
+              value={imgUrl}
+              style={{
+                margin: "0.5em 0",
+                display: "block"
+              }}
+            />
+          
 
-        // console.log(imgUrl);
-    }
+            <TextField 
+              type="text"
+              placeholder="title"
+              variant="filled"
+              onChange={e => titleSetter(e.target.value)}
+              value={title}
+              style={{
+                margin: "0.5em 0",
+                display: "block"
+              }}
+            />
+          
 
-    return(
-        <div>
-            <h1> Add a new Painting</h1>
-            
-            <form>
-                {/* Controlled Input */}
-                <input 
-                    type="text" 
-                    placeholder="ImgURL"
-                    onChange={handleImgUrl}
-                    value={imgUrl}
-                /><br/>
+            <TextField 
+              type="text"
+              placeholder="Artist Name"
+              variant="filled"
+              onChange={e => artistNameSetter(e.target.value)}
+              value={artistName}
+              style={{
+                margin: "0.5em 0",
+                display: "block"
+              }}
+            />
+          
 
-                {/* Uncontrolled Input */}
-                <input type="text" placeholder="Title"/><br/>
-                
-                {/* Uncontrolled Input */}
-                <input type="text" placeholder="Artist Name"/><br/>
+            <TextField 
+              type="text"
+              placeholder="date"
+              variant="filled"
+              onChange={e => dateSetter(e.target.value)}
+              value={date}
+              style={{
+                margin: "0.5em 0",
+                display: "block"
+              }}
+            />
+          
 
-                <input type="text" placeholder="date"/><br/>
-                <input type="text" placeholder="width"/><br/>
-                <input type="text" placeholder="height"/><br/>
+            <TextField 
+              type="text"
+              placeholder="width"
+              variant="filled"
+              onChange={e => widthSetter(e.target.value)}
+              value={width}
+              style={{
+                margin: "0.5em 0",
+                display: "block"
+              }}
+            />
+          
 
-                <input type="submit" value="add new painting"/>
-            </form>
-        </div>
-    )
+            <TextField 
+              type="text"
+              placeholder="height"
+              variant="filled"
+              onChange={e => heightSetter(e.target.value)}
+              value={height}
+              style={{
+                margin: "0.5em 0 1em",
+                display: "block"
+              }}
+            />
+
+          <Button variant="contained" color="primary" type="submit">Add New Painting</Button>
+        </form>
+      </Box>
+    </Container>
+  )
 }
 
 export default PaintingForm
