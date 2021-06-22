@@ -5,17 +5,50 @@ import Painting from './Painting';
 import { useState } from 'react';
 
 // Material-UI Imports
-import { TextField } from '@material-ui/core';
-import { Grid } from '@material-ui/core';
-import { Box } from '@material-ui/core';
-import { Container } from '@material-ui/core';
+import { Container, Button, Box, Grid, TextField } from '@material-ui/core';
+import paintingsData from './painting_data';
 
-function PaintingsList(props) {
+function PaintingsList() {
+
+  const [paintings, paintingsSetter] = useState(paintingsData);
+  const [sorted, sortedSetter] = useState(false);
+
+
+  // Create callback function to change Parent's "paintings" state to be sorted by votes
+  function sortPaintings() {
+    
+    // Use the spread (...) operator to clone the state / prompt React to ackowledge the state change
+    let originalList = [...paintingsData];
+    
+    const sortedList = originalList.sort((currentPainting, nextPainting) => {
+      let votesCurrentPainting = currentPainting.votes;
+      let votesNextPainting = nextPainting.votes;
+
+      // Compare the two vote amounts
+      if (votesCurrentPainting < votesNextPainting) return 1;
+      if (votesCurrentPainting > votesNextPainting) return -1;
+      return 0;
+    });
+    paintingsSetter(sortedList);
+  }
+
+  function removeSort() {
+    paintingsSetter(paintingsData)
+  }
+
+  function toggleSort() {
+    if (sorted) {
+      removeSort();
+    } else {
+      sortPaintings();
+    }
+    sortedSetter(!sorted);
+  }
   
   const [searchTerm, setSearchTerm] = useState("");
 
   function searchResults() {
-    return props.paintings.filter(painting => {
+    return paintings.filter(painting => {
       const title = painting.title.toLowerCase();
       return title.includes(searchTerm.toLowerCase())
     })
@@ -27,18 +60,23 @@ function PaintingsList(props) {
 
   return(
     <div>
-    {/* Shorthand JSX Parent Container Syntax */}
-    {/* <> */}
 
       <Container align="center">
         <h1>Paintings</h1>
         <hr />
-        <TextField 
-          id="filled-basic" 
-          label="Search" 
-          variant="filled" 
-          onChange={handleSearch}
-        />
+        {/* <Box width={1/3}> */}
+        <Box display="flex" style={{ justifyContent: "space-between" }}>
+          <TextField 
+            id="filled-basic" 
+            label="Search" 
+            variant="filled" 
+            onChange={handleSearch}
+            />
+        
+            <Button variant="contained" onClick={toggleSort}>{sorted ? 'Unsort Paintings' : 'Sort Paintings'}</Button>  
+        </Box>
+        {/* </Box> */}
+        
 
         {/* Implement Material-UI */}
         <Box m={5}>

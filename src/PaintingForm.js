@@ -1,17 +1,25 @@
 // import useState hook to initialize our states and make them re-settable
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom'
 import { TextField, Container, Box, Button } from '@material-ui/core';
 
 function PaintingForm() {
     // create a state to keep track of ImgURL
     // const [stateName, setterMethod] = useState(initialStateValue);
-    
+  const history = useHistory();
+
   const [imgUrl, imgUrlSetter] = useState("");
   const [title, titleSetter] = useState("");
   const [artistName, artistNameSetter] = useState("");
   const [date, dateSetter] = useState("");
   const [width, widthSetter] = useState("");
   const [height, heightSetter] = useState("");
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // make fetch request here
+    history.push('/')
+  }
 
   return(
     <Container>
@@ -22,7 +30,7 @@ function PaintingForm() {
       >
         <h1> Add a new Painting</h1>
         
-        <form>
+        <form onSubmit={handleSubmit}>
           {/* Controlled Input */}
             <TextField 
               type="text"
