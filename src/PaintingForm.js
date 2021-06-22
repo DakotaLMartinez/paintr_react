@@ -77,7 +77,7 @@ function PaintingForm() {
           
 
             <TextField 
-              type="text"
+              type="number"
               placeholder="width"
               variant="filled"
               onChange={e => widthSetter(e.target.value)}
@@ -90,7 +90,7 @@ function PaintingForm() {
           
 
             <TextField 
-              type="text"
+              type="number"
               placeholder="height"
               variant="filled"
               onChange={e => heightSetter(e.target.value)}
