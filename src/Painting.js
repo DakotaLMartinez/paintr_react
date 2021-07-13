@@ -7,7 +7,25 @@ function Painting(props) {
 
   // Breakout Activity #2: Create Function to Add Votes (addVotes)
   function addVotes() {
-    votesSetter(votes => votes + 1);
+    // optimistic rendering
+    votesSetter(votes => votes + 1)
+    fetch(`http://localhost:9393/paintings/${props.painting.id}/upvote`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    })
+      .then(res => res.json())
+      .then(painting => {
+        // updates votes again to match the amount of votes in the DB
+        // This is problematic in the unrealistic scenario that the same 
+        // user clicks the button multiple times in a row 
+        // try it out in the browser to see what happens and think about
+        // how you might get around the problem
+        votesSetter(painting.votes);
+      })
+      
   }
 
   return (

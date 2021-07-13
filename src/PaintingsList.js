@@ -2,17 +2,27 @@
 import Painting from './Painting';
 
 // Hooks Imports
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 // Material-UI Imports
 import { Container, Button, Box, Grid, TextField } from '@material-ui/core';
-import paintingsData from './painting_data';
+
 
 function PaintingsList() {
 
+  const [paintingsData, paintingsDataSetter] = useState([])
   const [paintings, paintingsSetter] = useState(paintingsData);
   const [sorted, sortedSetter] = useState(false);
 
+  useEffect(() => {
+    fetch("http://localhost:9393/paintings")
+      .then(response => response.json())
+      .then(paintings => {
+        console.log(paintings)
+        paintingsDataSetter(paintings);
+        paintingsSetter(paintings);
+      })
+  }, [])
 
   // Create callback function to change Parent's "paintings" state to be sorted by votes
   function sortPaintings() {
