@@ -1,10 +1,25 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function Painting(props) {
 
   // Initialize "votes" state
   const [votes, votesSetter] = useState(props.painting.votes);
+  const [debouncedVotes, debouncedVotesSetter] = useState(props.painting.votes);
 
+  // update votes once after debouncedVotes has changed and stayed the same for
+  // 8000 milliseconds. This should happen after all promises have resolved
+  useEffect(() => {
+    const timeout = window.setTimeout(() => {
+      // check your console. You should see this log once if you click the like 
+      // button 4 times within 8000 milliseconds
+      console.log('votes updated from debouncedVotes from API')
+      votesSetter(debouncedVotes)
+    }, 8000)
+
+    return () => {
+      window.clearTimeout(timeout)
+    }
+  }, [debouncedVotes])
   // Breakout Activity #2: Create Function to Add Votes (addVotes)
   function addVotes() {
     // optimistic rendering
@@ -23,7 +38,8 @@ function Painting(props) {
         // user clicks the button multiple times in a row 
         // try it out in the browser to see what happens and think about
         // how you might get around the problem
-        votesSetter(painting.votes);
+        // votesSetter(painting.votes);
+        debouncedVotesSetter(painting.votes)
       })
       
   }
