@@ -23,6 +23,8 @@ function Painting(props) {
         // user clicks the button multiple times in a row 
         // try it out in the browser to see what happens and think about
         // how you might get around the problem
+        // once you've given it a shot, check out the solution_with_debounced_update
+        // branch to see how it's done
         votesSetter(painting.votes);
       })
       
